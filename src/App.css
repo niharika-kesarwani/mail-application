@@ -1,0 +1,11 @@
+.header {
+  text-align: center;
+}
+.navlink {
+  margin: 0 2rem;
+}
+ul {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+}

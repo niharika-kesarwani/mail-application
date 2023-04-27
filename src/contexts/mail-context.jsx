@@ -31,18 +31,18 @@ export const MailProvider = ({ children }) => {
       case "ADD_TRASH":
         return {
           ...inboxMails,
-          deletedMails: [
+          trashMails: [
             inboxMails.allMails?.find(({ mId }) => mId === id),
-            ...inboxMails.deletedMails,
+            ...inboxMails.trashMails,
           ],
           allMails: inboxMails.allMails?.filter(({ mId }) => mId !== id),
         };
       case "ADD_TRASH_FROM_SPAM":
         return {
           ...inboxMails,
-          deletedMails: [
+          trashMails: [
             inboxMails.spamMails?.find(({ mId }) => mId === id),
-            ...inboxMails.deletedMails,
+            ...inboxMails.trashMails,
           ],
           spamMails: inboxMails.spamMails?.filter(({ mId }) => mId !== id),
         };
@@ -57,7 +57,7 @@ export const MailProvider = ({ children }) => {
       case "TRASH_READ_UNREAD":
         return {
           ...inboxMails,
-          deletedMails: inboxMails.deletedMails?.map((mail) =>
+          trashMails: inboxMails.trashMails?.map((mail) =>
             mail.mId === id ? { ...mail, unread: !mail.unread } : mail
           ),
         };
@@ -82,12 +82,10 @@ export const MailProvider = ({ children }) => {
         return {
           ...inboxMails,
           spamMails: [
-            inboxMails.deletedMails?.find(({ mId }) => mId === id),
+            inboxMails.trashMails?.find(({ mId }) => mId === id),
             ...inboxMails.spamMails,
           ],
-          deletedMails: inboxMails.deletedMails?.filter(
-            ({ mId }) => mId !== id
-          ),
+          trashMails: inboxMails.trashMails?.filter(({ mId }) => mId !== id),
         };
 
       default:
@@ -97,7 +95,7 @@ export const MailProvider = ({ children }) => {
 
   const [inboxMails, setInboxMails] = useReducer(handleInboxReducer, {
     allMails: mails,
-    deletedMails: [],
+    trashMails: [],
     spamMails: [],
     showUnread: false,
     showStarred: false,

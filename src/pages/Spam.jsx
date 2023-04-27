@@ -6,10 +6,13 @@ export const Spam = () => {
     inboxMails: { spamMails },
   } = useMails();
   return (
-    <ul>
-      {spamMails?.map((mail) => (
-        <MailCard key={mail.mId} {...mail} spam />
-      ))}
-    </ul>
+    <div>
+      <h1>{spamMails.length > 0 ? "Spam Mails" : "No mail in spam!"}</h1>
+      <ul>
+        {spamMails?.map((mail) => (
+          <MailCard key={mail.mId} {...mail} spam />
+        ))}
+      </ul>
+    </div>
   );
 };

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { NavLink } from "react-router-dom";
 import { useMails } from "../contexts/mail-context";
 
 export const MailCard = ({
@@ -9,7 +10,10 @@ export const MailCard = ({
   content,
   trash,
   spam,
+  tag,
+  details,
 }) => {
+  tag === "spam" ? (spam = true) : tag === "trash" ? (trash = true) : null;
   const { setInboxMails } = useMails();
   return (
     <>
@@ -28,6 +32,7 @@ export const MailCard = ({
           </button>
         )}
         <p>{content}</p>
+        {!details && <NavLink to={`/details/${mId}`}>View Details</NavLink>}
         {!trash && (
           <button
             onClick={() =>
@@ -37,7 +42,13 @@ export const MailCard = ({
               })
             }
           >
-            Delete
+            {tag === "spam" ? (
+              <NavLink to="/spam">Delete</NavLink>
+            ) : details ? (
+              <NavLink to="/">Delete</NavLink>
+            ) : (
+              "Delete"
+            )}
           </button>
         )}
         <button
@@ -63,7 +74,13 @@ export const MailCard = ({
               })
             }
           >
-            Report Spam
+            {tag === "trash" ? (
+              <NavLink to="/trash">Report Spam</NavLink>
+            ) : details ? (
+              <NavLink to="/">Report Spam</NavLink>
+            ) : (
+              "Report Spam"
+            )}
           </button>
         )}
       </li>

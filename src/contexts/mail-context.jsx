@@ -1,14 +1,38 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { mails } from "../data/mailsDB";
 
 export const MailContext = createContext();
 
 export const MailProvider = ({ children }) => {
-  const [inboxMails, setInboxMails] = useState(mails);
+  const handleInboxReducer = (inboxMails, { type }) => {
+    switch (type) {
+      case "SHOW_UNREAD":
+        return { ...inboxMails, showUnread: !inboxMails.showUnread };
+      case "SHOW_STARRED":
+        return { ...inboxMails, showStarred: !inboxMails.showStarred };
+      default:
+        return inboxMails;
+    }
+  };
+
+  const [inboxMails, setInboxMails] = useReducer(handleInboxReducer, {
+    mails: mails,
+    showUnread: false,
+    showStarred: false,
+  });
+
+  const filterUnread = inboxMails.showUnread
+    ? mails.filter(({ unread }) => unread)
+    : mails;
+
+  const filterStarred = inboxMails.showStarred
+    ? filterUnread.filter(({ isStarred }) => isStarred)
+    : filterUnread;
+
   return (
-    <MailContext.Provider value={{ inboxMails, setInboxMails }}>
+    <MailContext.Provider value={{ setInboxMails, filterStarred }}>
       {children}
     </MailContext.Provider>
   );

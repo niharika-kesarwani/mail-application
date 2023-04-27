@@ -27,7 +27,16 @@ export const MailCard = ({
             Delete
           </button>
         )}
-        <button>Mark as {unread ? "Read" : "Unread"}</button>
+        <button
+          onClick={() =>
+            setInboxMails({
+              type: trash ? "DELETE_READ_UNREAD" : "READ_UNREAD",
+              id: mId,
+            })
+          }
+        >
+          Mark as {unread ? "Read" : "Unread"}
+        </button>
       </li>
     </>
   );

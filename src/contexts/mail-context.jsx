@@ -28,6 +28,20 @@ export const MailProvider = ({ children }) => {
           ],
           allMails: inboxMails.allMails?.filter(({ mId }) => mId !== id),
         };
+      case "DELETE_READ_UNREAD":
+        return {
+          ...inboxMails,
+          deletedMails: inboxMails.deletedMails.map((mail) =>
+            mail.mId === id ? { ...mail, unread: !mail.unread } : mail
+          ),
+        };
+      case "READ_UNREAD":
+        return {
+          ...inboxMails,
+          allMails: inboxMails.allMails.map((mail) =>
+            mail.mId === id ? { ...mail, unread: !mail.unread } : mail
+          ),
+        };
       default:
         return inboxMails;
     }

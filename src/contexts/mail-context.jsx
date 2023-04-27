@@ -6,26 +6,35 @@ import { mails } from "../data/mailsDB";
 export const MailContext = createContext();
 
 export const MailProvider = ({ children }) => {
-  const handleInboxReducer = (inboxMails, { type }) => {
+  const handleInboxReducer = (inboxMails, { type, id }) => {
     switch (type) {
       case "SHOW_UNREAD":
         return { ...inboxMails, showUnread: !inboxMails.showUnread };
       case "SHOW_STARRED":
         return { ...inboxMails, showStarred: !inboxMails.showStarred };
+      case "STAR_UNSTAR":
+        return {
+          ...inboxMails,
+          allMails: inboxMails.allMails.map((mail) =>
+            mail.mId === id ? { ...mail, isStarred: !mail.isStarred } : mail
+          ),
+        };
       default:
         return inboxMails;
     }
   };
 
   const [inboxMails, setInboxMails] = useReducer(handleInboxReducer, {
-    mails: mails,
+    allMails: mails,
+    displayMails: mails,
+    deletedMails: [],
     showUnread: false,
     showStarred: false,
   });
 
   const filterUnread = inboxMails.showUnread
-    ? mails.filter(({ unread }) => unread)
-    : mails;
+    ? inboxMails.allMails.filter(({ unread }) => unread)
+    : inboxMails.allMails;
 
   const filterStarred = inboxMails.showStarred
     ? filterUnread.filter(({ isStarred }) => isStarred)

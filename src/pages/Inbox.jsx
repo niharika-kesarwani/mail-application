@@ -1,3 +1,4 @@
+import { MailCard } from "../components/MailCard";
 import { useMails } from "../contexts/mail-context";
 
 export const Inbox = () => {
@@ -23,13 +24,8 @@ export const Inbox = () => {
       </label>
       <h2>Unread: 0</h2>
       <ul>
-        {filterStarred?.map(({ mId, unread, isStarred, subject, content }) => (
-          <li key={mId}>
-            <h2>Subject: {subject}</h2>
-            <button>{isStarred ? "Unstar" : "Star"}</button>
-            <p>{content}</p>
-            <button>Mark as {unread ? "Read" : "Unread"}</button>
-          </li>
+        {filterStarred?.map((mail) => (
+          <MailCard key={mail.mId} {...mail} />
         ))}
       </ul>
     </>

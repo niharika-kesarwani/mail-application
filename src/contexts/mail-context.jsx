@@ -12,6 +12,7 @@ export const MailProvider = ({ children }) => {
         return { ...inboxMails, showUnread: !inboxMails.showUnread };
       case "SHOW_STARRED":
         return { ...inboxMails, showStarred: !inboxMails.showStarred };
+
       case "STAR_UNSTAR":
         return {
           ...inboxMails,
@@ -19,7 +20,15 @@ export const MailProvider = ({ children }) => {
             mail.mId === id ? { ...mail, isStarred: !mail.isStarred } : mail
           ),
         };
-      case "DELETE":
+      case "SPAM_STAR_UNSTAR":
+        return {
+          ...inboxMails,
+          spamMails: inboxMails.spamMails?.map((mail) =>
+            mail.mId === id ? { ...mail, isStarred: !mail.isStarred } : mail
+          ),
+        };
+
+      case "ADD_TRASH":
         return {
           ...inboxMails,
           deletedMails: [
@@ -28,20 +37,59 @@ export const MailProvider = ({ children }) => {
           ],
           allMails: inboxMails.allMails?.filter(({ mId }) => mId !== id),
         };
-      case "DELETE_READ_UNREAD":
+      case "ADD_TRASH_FROM_SPAM":
         return {
           ...inboxMails,
-          deletedMails: inboxMails.deletedMails.map((mail) =>
-            mail.mId === id ? { ...mail, unread: !mail.unread } : mail
-          ),
+          deletedMails: [
+            inboxMails.spamMails?.find(({ mId }) => mId === id),
+            ...inboxMails.deletedMails,
+          ],
+          spamMails: inboxMails.spamMails?.filter(({ mId }) => mId !== id),
         };
+
       case "READ_UNREAD":
         return {
           ...inboxMails,
-          allMails: inboxMails.allMails.map((mail) =>
+          allMails: inboxMails.allMails?.map((mail) =>
             mail.mId === id ? { ...mail, unread: !mail.unread } : mail
           ),
         };
+      case "TRASH_READ_UNREAD":
+        return {
+          ...inboxMails,
+          deletedMails: inboxMails.deletedMails?.map((mail) =>
+            mail.mId === id ? { ...mail, unread: !mail.unread } : mail
+          ),
+        };
+      case "SPAM_READ_UNREAD":
+        return {
+          ...inboxMails,
+          spamMails: inboxMails.spamMails?.map((mail) =>
+            mail.mId === id ? { ...mail, unread: !mail.unread } : mail
+          ),
+        };
+
+      case "ADD_SPAM":
+        return {
+          ...inboxMails,
+          spamMails: [
+            inboxMails.allMails?.find(({ mId }) => mId === id),
+            ...inboxMails.spamMails,
+          ],
+          allMails: inboxMails.allMails?.filter(({ mId }) => mId !== id),
+        };
+      case "ADD_SPAM_FROM_TRASH":
+        return {
+          ...inboxMails,
+          spamMails: [
+            inboxMails.deletedMails?.find(({ mId }) => mId === id),
+            ...inboxMails.spamMails,
+          ],
+          deletedMails: inboxMails.deletedMails?.filter(
+            ({ mId }) => mId !== id
+          ),
+        };
+
       default:
         return inboxMails;
     }
@@ -50,6 +98,7 @@ export const MailProvider = ({ children }) => {
   const [inboxMails, setInboxMails] = useReducer(handleInboxReducer, {
     allMails: mails,
     deletedMails: [],
+    spamMails: [],
     showUnread: false,
     showStarred: false,
   });

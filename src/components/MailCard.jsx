@@ -1,16 +1,32 @@
 /* eslint-disable react/prop-types */
 import { useMails } from "../contexts/mail-context";
 
-export const MailCard = ({ mId, unread, isStarred, subject, content }) => {
+export const MailCard = ({
+  mId,
+  unread,
+  isStarred,
+  subject,
+  content,
+  trash,
+}) => {
   const { setInboxMails } = useMails();
   return (
     <>
       <li key={mId}>
         <h2>Subject: {subject}</h2>
-        <button onClick={() => setInboxMails({ type: "STAR_UNSTAR", id: mId })}>
-          {isStarred ? "Unstar" : "Star"}
-        </button>
+        {!trash && (
+          <button
+            onClick={() => setInboxMails({ type: "STAR_UNSTAR", id: mId })}
+          >
+            {isStarred ? "Unstar" : "Star"}
+          </button>
+        )}
         <p>{content}</p>
+        {!trash && (
+          <button onClick={() => setInboxMails({ type: "DELETE", id: mId })}>
+            Delete
+          </button>
+        )}
         <button>Mark as {unread ? "Read" : "Unread"}</button>
       </li>
     </>

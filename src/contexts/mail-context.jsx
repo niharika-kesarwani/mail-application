@@ -15,9 +15,18 @@ export const MailProvider = ({ children }) => {
       case "STAR_UNSTAR":
         return {
           ...inboxMails,
-          allMails: inboxMails.allMails.map((mail) =>
+          allMails: inboxMails.allMails?.map((mail) =>
             mail.mId === id ? { ...mail, isStarred: !mail.isStarred } : mail
           ),
+        };
+      case "DELETE":
+        return {
+          ...inboxMails,
+          deletedMails: [
+            inboxMails.allMails?.find(({ mId }) => mId === id),
+            ...inboxMails.deletedMails,
+          ],
+          allMails: inboxMails.allMails?.filter(({ mId }) => mId !== id),
         };
       default:
         return inboxMails;
@@ -26,22 +35,25 @@ export const MailProvider = ({ children }) => {
 
   const [inboxMails, setInboxMails] = useReducer(handleInboxReducer, {
     allMails: mails,
-    displayMails: mails,
     deletedMails: [],
     showUnread: false,
     showStarred: false,
   });
 
   const filterUnread = inboxMails.showUnread
-    ? inboxMails.allMails.filter(({ unread }) => unread)
+    ? inboxMails.allMails?.filter(({ unread }) => unread)
     : inboxMails.allMails;
 
   const filterStarred = inboxMails.showStarred
-    ? filterUnread.filter(({ isStarred }) => isStarred)
+    ? filterUnread?.filter(({ isStarred }) => isStarred)
     : filterUnread;
 
+  const countOfUnread = filterStarred?.filter(({ unread }) => unread).length;
+
   return (
-    <MailContext.Provider value={{ setInboxMails, filterStarred }}>
+    <MailContext.Provider
+      value={{ inboxMails, setInboxMails, filterStarred, countOfUnread }}
+    >
       {children}
     </MailContext.Provider>
   );

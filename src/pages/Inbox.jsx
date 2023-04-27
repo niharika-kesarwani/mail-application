@@ -2,7 +2,7 @@ import { MailCard } from "../components/MailCard";
 import { useMails } from "../contexts/mail-context";
 
 export const Inbox = () => {
-  const { setInboxMails, filterStarred } = useMails();
+  const { setInboxMails, filterStarred, countOfUnread } = useMails();
 
   return (
     <>
@@ -22,7 +22,7 @@ export const Inbox = () => {
         />
         Show starred mails
       </label>
-      <h2>Unread: 0</h2>
+      <h2>Unread: {countOfUnread}</h2>
       <ul>
         {filterStarred?.map((mail) => (
           <MailCard key={mail.mId} {...mail} />

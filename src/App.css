@@ -1,15 +1,25 @@
 .App {
   text-align: left;
 }
-.content {
-  display: flex;
+@media (min-width: 768px) {
+  .content {
+    display: flex;
+  }
+  button {
+    width: fit-content;
+    height: 30px;
+    margin: 0 20px;
+    padding: 0 10px;
+  }
+  .routes {
+    padding: 0 20px 20px;
+  }
 }
 .header {
   text-align: center;
 }
 .routes {
   width: 100%;
-  padding: 0 20px 20px;
 }
 .navlink {
   margin: 0 2rem;
@@ -56,11 +66,9 @@ li:hover {
   justify-content: end;
 }
 button {
-  width: fit-content;
-  height: 30px;
   background: white;
   border: none;
-  margin: 0 20px;
-  padding: 0 10px;
+  margin: 0 5px;
+  padding: 5px 10px;
   cursor: pointer;
 }

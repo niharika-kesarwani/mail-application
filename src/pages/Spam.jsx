@@ -6,8 +6,8 @@ export const Spam = () => {
     inboxMails: { spamMails },
   } = useMails();
   return (
-    <div>
-      <h1>{spamMails.length > 0 ? "Spam Mails" : "No mail in spam!"}</h1>
+    <div className="routes">
+      <h1>{spamMails.length === 0 && "No mail in spam!"}</h1>
       <ul>
         {spamMails?.map((mail) => (
           <MailCard key={mail.mId} {...mail} spam />

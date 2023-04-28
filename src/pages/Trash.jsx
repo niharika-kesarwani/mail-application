@@ -6,8 +6,8 @@ export const Trash = () => {
     inboxMails: { trashMails },
   } = useMails();
   return (
-    <div>
-      <h1>{trashMails.length > 0 ? "Trash Mails" : "No mail in trash!"}</h1>
+    <div className="routes">
+      <h1>{trashMails.length === 0 && "No mail in trash!"}</h1>
       <ul>
         {trashMails?.map((mail) => (
           <MailCard key={mail.mId} {...mail} trash />

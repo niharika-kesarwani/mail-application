@@ -16,11 +16,15 @@ export const MailDetails = () => {
   const selectedTag = trashMail ? "trash" : spamMail ? "spam" : null;
 
   return (
-    <MailCard
-      key={selectedMail.mId}
-      {...selectedMail}
-      tag={selectedTag}
-      details
-    />
+    <div className="routes">
+      <ul>
+        <MailCard
+          key={selectedMail.mId}
+          {...selectedMail}
+          tag={selectedTag}
+          details
+        />
+      </ul>
+    </div>
   );
 };

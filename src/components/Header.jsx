@@ -3,20 +3,22 @@
 import { NavLink } from "react-router-dom";
 
 export const Header = () => {
+  const getActiveStyle = ({ isActive }) => ({
+    color: isActive ? "red" : "grey",
+    borderRight: `5px solid ${isActive ? "black" : "white"}`,
+  });
+
   return (
-    <div className="header">
-      <h1>niharika's mail box</h1>
-      <p>
-        <NavLink className="navlink" to="/">
-          Inbox
-        </NavLink>
-        <NavLink className="navlink" to="/spam">
-          Spam
-        </NavLink>
-        <NavLink className="navlink" to="/trash">
-          Trash
-        </NavLink>
-      </p>
+    <div>
+      <NavLink style={getActiveStyle} className="navlink" to="/">
+        Inbox
+      </NavLink>
+      <NavLink style={getActiveStyle} className="navlink" to="/spam">
+        Spam
+      </NavLink>
+      <NavLink style={getActiveStyle} className="navlink" to="/trash">
+        Trash
+      </NavLink>
     </div>
   );
 };

@@ -1,11 +1,66 @@
+.App {
+  text-align: left;
+}
+.content {
+  display: flex;
+}
 .header {
   text-align: center;
 }
+.routes {
+  width: 100%;
+  padding: 0 20px 20px;
+}
 .navlink {
   margin: 0 2rem;
+  padding-right: 10px;
+  display: flex;
+  height: 60px;
+  text-decoration: none;
+  font-weight: bold;
+  align-items: center;
 }
 ul {
-  text-align: left;
   list-style: none;
   padding: 0;
+}
+li {
+  border: 2px solid rgb(188, 187, 187);
+  margin-bottom: 0.2px;
+  border-radius: 5px;
+  padding: 10px;
+  background: rgb(236, 236, 248);
+}
+li:hover {
+  background: white;
+}
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+.space-between h2 {
+  margin: 5px 0 0;
+}
+.detail-navlink,
+.space-between .navlink {
+  margin: 0;
+  height: fit-content;
+  color: black;
+  font-weight: normal;
+  text-decoration: none;
+}
+.end-buttons {
+  display: flex;
+  justify-content: end;
+}
+button {
+  width: fit-content;
+  height: 30px;
+  background: white;
+  border: none;
+  margin: 0 20px;
+  padding: 0 10px;
+  cursor: pointer;
 }

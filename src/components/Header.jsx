@@ -9,7 +9,7 @@ export const Header = () => {
   });
 
   return (
-    <div>
+    <div className="header-navlink">
       <NavLink style={getActiveStyle} className="navlink" to="/">
         Inbox
       </NavLink>

@@ -2,7 +2,8 @@ import { MailCard } from "../components/MailCard";
 import { useMails } from "../contexts/mail-context";
 
 export const Inbox = () => {
-  const { setInboxMails, filterStarred, countOfUnread } = useMails();
+  const { inboxMails, setInboxMails, filterStarred, countOfUnread } =
+    useMails();
 
   return (
     <div className="routes">
@@ -11,6 +12,7 @@ export const Inbox = () => {
         <label>
           <input
             type="checkbox"
+            checked={inboxMails.showUnread}
             onChange={() => setInboxMails({ type: "SHOW_UNREAD" })}
           />
           Show unread mails
@@ -18,6 +20,7 @@ export const Inbox = () => {
         <label>
           <input
             type="checkbox"
+            checked={inboxMails.showStarred}
             onChange={() => setInboxMails({ type: "SHOW_STARRED" })}
           />
           Show starred mails

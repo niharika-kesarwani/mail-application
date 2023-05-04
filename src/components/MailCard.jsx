@@ -54,11 +54,19 @@ export const MailCard = ({
                 }
               >
                 {tag === "spam" ? (
-                  <NavLink to="/spam" className="detail-navlink">
+                  <NavLink
+                    to="/spam"
+                    className="detail-navlink"
+                    style={{ color: "red" }}
+                  >
                     Delete
                   </NavLink>
                 ) : details ? (
-                  <NavLink to="/" className="detail-navlink">
+                  <NavLink
+                    to="/"
+                    className="detail-navlink"
+                    style={{ color: "red" }}
+                  >
                     Delete
                   </NavLink>
                 ) : (
@@ -92,11 +100,19 @@ export const MailCard = ({
                 }
               >
                 {tag === "trash" ? (
-                  <NavLink to="/trash" className="detail-navlink">
+                  <NavLink
+                    to="/trash"
+                    className="detail-navlink"
+                    style={{ color: "green" }}
+                  >
                     Report Spam
                   </NavLink>
                 ) : details ? (
-                  <NavLink to="/" className="detail-navlink">
+                  <NavLink
+                    to="/"
+                    className="detail-navlink"
+                    style={{ color: "green" }}
+                  >
                     Report Spam
                   </NavLink>
                 ) : (
